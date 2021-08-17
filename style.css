@@ -1,0 +1,67 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#app{
+    width: 300px;
+    height: 300px;
+}
+
+
+/* Table design */
+table{border-collapse: collapse;}
+table td{
+    height: 100px;
+    width: 100px;
+    border: 4px solid black;
+    cursor: pointer;
+    transition: all 0.7s ease;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 56px;
+    font-weight: bolder;
+}
+table td:hover{background-color : aqua;}
+
+/* Cool trick to remove the outside borders */
+table tr:first-child td{border-top: none;}
+table tr:last-child td{border-bottom: none;}
+table tr td:first-child{border-left: none;}
+table tr td:last-child{border-right: none;}
+
+
+
+/* Modal Design */
+.modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-size: 32px;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+.modal button{
+    display: block;
+    background-color: white;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 2px;
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.modal button:hover{transform: scale(0.95);}
