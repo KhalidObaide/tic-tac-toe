@@ -7,6 +7,7 @@ let turn = player1;
 let originalBoard;
 let gameover = false;
 const isBotPlaying = true;
+const minmaxDepth = 100;
 let cellsDOM = [];
 
 function displayModal(text){
@@ -132,10 +133,64 @@ function handleTurn(cell){
     }
 }
 
-
 function botTurn(){
-    return getEmptyCells()[0];
+    return minmax(originalBoard, player2, minmaxDepth).index;
 }
 
+
+/* Main minmax Algo goes here */
+function minmax(newBoard, player, depth){
+    const availSpots = getEmptyCells(newBoard);
+
+    // Terminal Case/Base
+    if(depth == 0 || (winner(newBoard) || TieGame(newBoard))){
+        if(winner(newBoard)){
+            if(winner(newBoard) == player1) return {score: -10}
+            if(winner(newBoard) == player2) return {score: 10}
+        }else if(TieGame(newBoard)) return {score: 0}
+    }
+
+
+    let moves = [];
+    for(let i=0; i<availSpots.length; i++){
+        let move = {};
+        move.index = newBoard[availSpots[i]];
+        newBoard[availSpots[i]] = player;
+
+        if(player == player2){
+            const res = minmax(newBoard, player1, depth-1);
+            move.score = res.score;
+        }else{
+            const res = minmax(newBoard, player2, depth-1);
+            move.score = res.score;
+        }
+
+
+        newBoard[availSpots[i]] = move.index;
+        moves.push(move);
+    }
+
+
+    let bestMove;
+    if(player === player2){
+        let bestScore = -10000;
+        for(let i=0; i<moves.length; i++){
+            if(moves[i].score > bestScore){
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }else{
+        let bestScore = 10000;
+        for(let i=0; i<moves.length; i++){
+            if(moves[i].score < bestScore){
+                bestScore = moves[i].score;
+                bestMove = i;
+            }
+        }
+    }
+
+    return moves[bestMove];
+}
 
 setupBoard();
